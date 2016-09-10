@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Vue.js 路由跳转 | Paolino</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Vue.js 路由跳转</h1><a id="logo" href="/.">Paolino</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Vue.js 路由跳转</h1><div class="post-meta">Sep 10, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-thread-key="2016/09/10/Vue-js-路由跳转/" href="/2016/09/10/Vue-js-路由跳转/#comments" class="ds-thread-count"></a><div class="post-content"><p>对于单页应用，官方提供了<code>vue-router</code>进行路由跳转的处理，本篇主要也是基于其官方文档写作而成。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>基于传统，我更喜欢采用<em>npm</em>包的形式进行安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install vue-router --save</div></pre></td></tr></table></figure>
+<p>当然，官方采用了多种方式进行安装，包括<code>bower</code>,<code>cdn</code>等。</p>
+<h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1><p>在HTML文档中使用，只需要利用<code>v-link</code>这个directive就行了，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-link</span>=<span class="string">"&#123;path: '/view-a'&#125;"</span>&gt;</span>Go to view-a<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>​    ps: <code>v-link</code>还支持<em>activeClass</em>用于指定链接活跃时的css样式。<em>replace</em>属性为<code>true</code>的时候可以让链接在跳转的时候不会留下历史记录。</p>
+<p>而在ES5中使用，需要先创建路由器实例，随后传入配置参数即可，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> router = <span class="keyword">new</span> VueRouter();</div><div class="line"></div><div class="line">router.map(&#123;</div><div class="line">  <span class="string">'/view-a'</span>: &#123;</div><div class="line">    component: ViewA</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/view-b'</span>: &#123;</div><div class="line">    component: ViewB</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">router.start(App, <span class="string">'#app'</span>);</div></pre></td></tr></table></figure>
+<p>以上定义的路由器规则，采用映射到一个组件的方式，最后启动应用的时候，挂载到<code>#app</code>的元素上。</p>
+<p>当然，如果你想采用ES6的语法进行配置，也是很容易做到的:</p>
+<ol>
+<li>先建立一个路由器模块，主要进行配置和绑定相关信息</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</div><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span>;</div><div class="line"></div><div class="line">Vue.use(VueRouter);</div><div class="line"></div><div class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(); <span class="comment">//这里可以带有路由器的配置参数</span></div><div class="line"></div><div class="line">router.map(&#123;</div><div class="line">  <span class="string">'/view-a'</span>: &#123;</div><div class="line">    component: ViewA</div><div class="line">  &#125;,</div><div class="line">  <span class="string">'/view-b'</span>: &#123;</div><div class="line">    component: ViewB</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> router; <span class="comment">//将路由器导出</span></div></pre></td></tr></table></figure>
+<ol>
+<li>在<code>app.js</code>入口启动文件中启用该路由器</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</div><div class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./routers'</span>;</div><div class="line"></div><div class="line">router.start(App, <span class="string">'#app'</span>);</div></pre></td></tr></table></figure>
+<h2 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h2><p>如果想要使用嵌套路由，如<code>/a/b</code>则可以更新路由配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">router.map(&#123;</div><div class="line">  <span class="string">'/a'</span>: &#123;</div><div class="line">    component: A,</div><div class="line">    subRoutes: &#123;</div><div class="line">      <span class="string">'/b'</span>: &#123;</div><div class="line">        component: B</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>同时，你需要在组件A和组件B中使用<code>&lt;router-view&gt;</code>，如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>组件A中，使用嵌套的外链</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"A"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span></div><div class="line">    This is component A</div><div class="line">  <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>路由器将自动渲染对应的组件以及更新路由信息。</p>
+<p>其中<code>&lt;router-view&gt;</code>可以传递props，支持<code>v-ref</code>,同时也可以使用<code>v-transition</code>和<code>transition-mode</code>来获得场景切换效果，被渲染的组件将注册到父级组件的<code>this.$</code>对象上。</p>
+<h1 id="路由对象和路由匹配"><a href="#路由对象和路由匹配" class="headerlink" title="路由对象和路由匹配"></a>路由对象和路由匹配</h1><p>路由对象，即<code>$router</code>会被注入每个组件中，可以利用它进行一些信息的获取。如</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$route.path</td>
+<td>当前路由对象的路径，如’/view/a’</td>
+</tr>
+<tr>
+<td>$rotue.params</td>
+<td>关于动态片段（如/user/<code>:username</code>)的键值对信息,如{username: ‘paolino’}</td>
+</tr>
+<tr>
+<td>$route.query</td>
+<td>请求参数，如<code>/foo?user=1</code>获取到<em>query.user = 1</em></td>
+</tr>
+<tr>
+<td>$route.router</td>
+<td>所属路由器以及所属组件信息</td>
+</tr>
+<tr>
+<td>$route.matched</td>
+<td>数组，包含当前匹配的路径中所包含的所有片段所对应的配置参数对象。</td>
+</tr>
+<tr>
+<td>$route.name</td>
+<td>当前路径名字</td>
+</tr>
+</tbody>
+</table>
+<p>当然，你也可以在自己定义路由规则（<code>map</code>)的时候自定义字段，用以特殊目的。</p>
+<p>全匹配片段的语法是使用通配符<code>*</code> 如，<code>/user/*any</code>就会匹配到任何以/user为开头的路径，并给<code>params</code>对象中赋值一个属性<code>any</code></p>
+<p>动态片段的语法就是使用<code>:</code>作为标志。</p>
+<h1 id="使用路径名称"><a href="#使用路径名称" class="headerlink" title="使用路径名称"></a>使用路径名称</h1><p>在定义路径规则的时候，如果你给它提供了一个<code>name</code>属性，则可以在后续使用这条路径规则的时候，直接引用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">router.map(&#123;</div><div class="line">  <span class="string">'/user/:userId'</span>: &#123;</div><div class="line">   	name: <span class="string">'user'</span>,</div><div class="line">    component: &#123;...&#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在<code>v-link</code>中使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-link</span>=<span class="string">"&#123;name: 'user', params: &#123;userId: 1&#125;"</span>&gt;</span>This is a user whose id is 1<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>还可以使用<code>router.go()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">router.go(&#123;name: <span class="string">'user'</span>, params: &#123;userId: <span class="number">1</span>&#125;&#125;);</div></pre></td></tr></table></figure>
+<p>最终都会匹配到<code>/user/1</code>这条路径上</p>
+<h1 id="路由选项"><a href="#路由选项" class="headerlink" title="路由选项"></a>路由选项</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">路由选项名</th>
+<th style="text-align:center">默认值</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">hashbang</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">将路径格式化为<code>#!</code>开头</td>
+</tr>
+<tr>
+<td style="text-align:center">history</td>
+<td style="text-align:center">false</td>
+<td style="text-align:center">启用HTML5 history模式，可以使用pushState和replaceState来管理记录</td>
+</tr>
+<tr>
+<td style="text-align:center">abstract</td>
+<td style="text-align:center">false</td>
+<td style="text-align:center">使用一个不依赖于浏览器的浏览历史虚拟管理后端。</td>
+</tr>
+<tr>
+<td style="text-align:center">transitionOnLoad</td>
+<td style="text-align:center">false</td>
+<td style="text-align:center">初次加载是否启用场景切换</td>
+</tr>
+<tr>
+<td style="text-align:center">saveScrollPosition</td>
+<td style="text-align:center">false</td>
+<td style="text-align:center">在启用html5 history模式的时候生效，用于后退操作的时候记住之前的滚动条位置</td>
+</tr>
+<tr>
+<td style="text-align:center">linkActiveClass</td>
+<td style="text-align:center">“v-link-active”</td>
+<td style="text-align:center">链接被点击时候需要添加到<code>v-link</code>元素上的class类,默认为<code>active</code></td>
+</tr>
+</tbody>
+</table>
+<p>如，我想采用一个有路径格式化并启用Html5 history功能的路由器，则可以在路由器初始化的时候，指定这些参数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> router = <span class="keyword">new</span> VueRouter(&#123;</div><div class="line">  hashbang: <span class="literal">true</span>,</div><div class="line">  history: <span class="literal">true</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这里只介绍做了一些简单的介绍，更多选项其参考<a href="http://router.vuejs.org/zh-cn/options.html" target="_blank" rel="external">这里</a>。</p>
+<p>最后，更多高级用法请参考官方文档。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://router.vuejs.org/zh-cn/" target="_blank" rel="external">官方文档</a></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2016/09/10/Vue-js-路由跳转/" data-id="ciswjqufj00031tfyevwdlbsn" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/09/05/hexo部署记/" class="next">hexo部署记</a></div><div data-thread-key="2016/09/10/Vue-js-路由跳转/" data-title="Vue.js 路由跳转" data-url="http://yoursite.com/2016/09/10/Vue-js-路由跳转/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/09/10/Vue-js-路由跳转/" data-title="Vue.js 路由跳转" data-url="http://yoursite.com/2016/09/10/Vue-js-路由跳转/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/Vue-js-路由跳转/">Vue.js 路由跳转</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/hexo部署记/">hexo部署记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/react-basic/">react-basic</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Paolino.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'myLife'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

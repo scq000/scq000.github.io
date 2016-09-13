@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="null"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>详解弹性盒Flexbox | Paolino</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">详解弹性盒Flexbox</h1><a id="logo" href="/.">Paolino</a><p class="description"></p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">详解弹性盒Flexbox</h1><div class="post-meta">Sep 13, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-thread-key="2016/09/13/详解弹性盒Flexbox/" href="/2016/09/13/详解弹性盒Flexbox/#comments" class="ds-thread-count"></a><div class="post-content"><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>Flexbox 是一个CSS3新增的模块，主要可以用来方便地进行布局操作。</p>
+<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><h2 id="container-父容器"><a href="#container-父容器" class="headerlink" title="container, 父容器"></a>container, 父容器</h2><p>container指用于应用这个布局的容器，它的值应该为</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>1.flex-direction: 指明了布局的方向，</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">flex-direction</span>: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>包括了竖排还是横排，<code>reverse</code>就是做逆序排序。默认方向为从左向右，从上到下。</p>
+<p>2.flex-wrap: 默认情况下，子元素会尽量排在一行，但是你也可以利用这个属性让其换行。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.flex-flow: 这是<code>flex-direction</code>和<code>flex-wrap</code>的缩写形式,默认值为<code>row nowrap</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">flex-flow</span>: &lt;<span class="string">'flex-direction'</span>&gt; || &lt;<span class="string">'flex-wrap'</span>&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.justify-content: 该属性主要用于控制子元素间空余空间的分布，适用于行分布的情况</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">justify-content</span>: flex-start | flex-end | center | space-between| space-around;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里给出各个属性值得意义：</p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>flex-start(默认)</td>
+<td>子元素尽量向头部靠拢</td>
+</tr>
+<tr>
+<td>flex-end</td>
+<td>子元素尽量向尾部靠拢</td>
+</tr>
+<tr>
+<td>center</td>
+<td>子元素居中</td>
+</tr>
+<tr>
+<td>space-between</td>
+<td>子元素平均分布，首元素在头部，尾元素在尾部</td>
+</tr>
+<tr>
+<td>space-around</td>
+<td>子元素平均分布，各个元素两端都有相等的空余空间</td>
+</tr>
+</tbody>
+</table>
+<p>5.align-items: 该属性控制子元素纵轴方向上排列方式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">align-items</span>: flex-start | flex-end |center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>flex-start</td>
+<td>子元素<code>margin</code>边缘处于容器上边缘</td>
+</tr>
+<tr>
+<td>flex-end</td>
+<td>子元素<code>margin</code>边缘处于容器下边缘</td>
+</tr>
+<tr>
+<td>center</td>
+<td>子元素垂直居中</td>
+</tr>
+<tr>
+<td>baseline</td>
+<td>子元素基线对齐</td>
+</tr>
+<tr>
+<td>stretch(默认)</td>
+<td>子元素收缩去填充容器，但仍然受<code>min-width</code>和<code>max-width</code>影响</td>
+</tr>
+</tbody>
+</table>
+<p>6.align-content: 该属性与<code>justify-content</code>类似，适用于多行内容的剩余空间分配情况</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">align-content</span>: flex-start| flex-end | center | space-between |space-around|stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>flex-start</td>
+<td>每一行子元素尽量向容器上部分靠拢</td>
+</tr>
+<tr>
+<td>flex-end</td>
+<td>每一行子元素尽量向容器下部分靠拢</td>
+</tr>
+<tr>
+<td>center</td>
+<td>子元素居中排布</td>
+</tr>
+<tr>
+<td>space-between</td>
+<td>子元素平均分布，第一行在容器上部分，最后一行在容器底部</td>
+</tr>
+<tr>
+<td>space-around</td>
+<td>子元素每一行之间间隔相等</td>
+</tr>
+<tr>
+<td>stretch(默认)</td>
+<td>子元素填充容器</td>
+</tr>
+</tbody>
+</table>
+<p>###属性总结</p>
+<blockquote>
+<p>这里其实你可以将<code>flex-flow</code>的相关属性看做是一条轴线(也是主轴main axis)，你用<code>flex-direction</code>来控制这条轴线的方向(横向或竖向)，而用<code>flex-wrap</code>来控制其子元素是否换行。而容器内的各个子元素将会沿着这条轴线进行排布。<br>另一方面，控制子元素布局方式的属性依据其轴线方向。主轴用<code>justify-content</code>,而纵轴方向用<code>align-items</code>和<code>align-content</code>，后者和水平<code>justify-content</code>类似，控制着每行子元素组之间的间距（可以认为行间距），而<code>align-items</code>就是控制子元素间的对齐方式的。</p>
+</blockquote>
+<h2 id="children，子元素"><a href="#children，子元素" class="headerlink" title="children，子元素"></a>children，子元素</h2><p>说完容器的属性，再来看一下子元素的属性。</p>
+<p>1.order: 默认情况下元素之间的排列顺序是按照其在HTML文档中定义好的顺序进行排列的，不过可以通过这个属性对其进行更改。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">order</span>: &lt;integer&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>元素的数值会按自然数的排列顺序进行排序。</p>
+<p>2.flex-grow: 这个属性控制元素的放大，默认值为0，不允许出现负数</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-grow</span>: &lt;number&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>容器内的各个元素大小是根据其比例进行计算的，如所有元素都是1，则元素大小就会均分，如果有一个是2，则这个元素就会比其他元素都大2倍。</p>
+<p>3.flex-shrink: 与<code>flex-grow</code>类似，它是用来控制元素的缩小的，默认值为1，也是不允许出现负值。</p>
+<p>4.flex-basis: 在分配容器剩余空间时会对元素基于此值先进行计算</p>
+   <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex-basic</span>: &lt;length&gt; | auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>   如果设置为0， 在内容去额外的空间不会被考虑进去，如果设置为auto，则额外的空间会基于<code>flex-grow</code>的值进行分配。</p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>auto(默认)</td>
+<td>根据元素的宽高属性进行计算</td>
+</tr>
+<tr>
+<td>content</td>
+<td>根据元素内的内容</td>
+</tr>
+<tr>
+<td><length></length></td>
+<td>可以是百分比，rem等</td>
+</tr>
+</tbody>
+</table>
+<p>5.flex: 这是<code>flex-grow</code>和<code>flex-shrink</code>和<code>flex-basis</code>的缩写形式,默认值为0，1，auto</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123;</div><div class="line">  <span class="attribute">flex</span>: none | [ &lt;<span class="string">'flex-grow'</span>&gt; &lt;<span class="string">'flex-shrink'</span>&gt;? || &lt;<span class="string">'flex-basis'</span>&gt;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>6.align-self: 这个属性值允许子元素复写容器的设置的<code>align-items</code>值。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.item &#123;</div><div class="line">  align-self: <span class="built_in">auto</span> | <span class="type">flex</span>-start| <span class="type">flex</span>-<span class="keyword">end</span>| <span class="type">center</span> |<span class="type">baseline</span>|<span class="type">stretch</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>PS：设置了flex的子元素，<code>float</code>,<code>clear</code>和<code>vertical-align</code>对其都不会有作用。</p>
+</blockquote>
+<p>###属性总结</p>
+<blockquote>
+<p>针对子元素之间的属性，主要是用来设置子元素的大小而排布顺序的。其中伸缩都会根据容器的轴线进行。这样就可以很容易实现等分，1：n：1之类的布局方式了。</p>
+</blockquote>
+<h1 id="举个栗子🌰"><a href="#举个栗子🌰" class="headerlink" title="举个栗子🌰"></a>举个栗子🌰</h1><p>在这里，举一个简单的例子，利用<code>flexbox</code>可以很容易地解决绝对居中的布局问题，而且代码量很少。</p>
+<h2 id="居中布局"><a href="#居中布局" class="headerlink" title="居中布局"></a>居中布局</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">  <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">  <span class="attribute">margin</span>: auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面代码可以看到，将父元素<code>display</code>的值设置为<code>flex</code>后，子元素的<code>margin</code>值设置为<code>auto</code>后就自动居中了，是不是很神奇呢？</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a><em>参考文档</em></h1><p><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank" rel="external">A Guide to Flexbox</a></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/2016/09/13/详解弹性盒Flexbox/" data-id="cit1hpw1v0003b7fy30sbiy4y" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2016/09/10/是谁调用了我的函数/" class="next">是谁调用了我的函数</a></div><div data-thread-key="2016/09/13/详解弹性盒Flexbox/" data-title="详解弹性盒Flexbox" data-url="http://yoursite.com/2016/09/13/详解弹性盒Flexbox/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/09/13/详解弹性盒Flexbox/" data-title="详解弹性盒Flexbox" data-url="http://yoursite.com/2016/09/13/详解弹性盒Flexbox/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/13/详解弹性盒Flexbox/">详解弹性盒Flexbox</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/是谁调用了我的函数/">是谁调用了我的函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/10/Vue-js-路由跳转/">Vue.js 路由跳转</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/hexo部署记/">hexo部署记</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/05/react-basic/">react-basic</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Paolino.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'myLife'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
